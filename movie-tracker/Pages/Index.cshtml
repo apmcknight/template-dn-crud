@@ -1,10 +1,70 @@
 ﻿@page
-@model IndexModel
+@model movie_tracker.Pages.Movies.IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Movie Tracker</title>
+</head>
+<body>
+    <div class="instructions">
+        <h1>Track your Movies!</h1>
+        <p>
+            Have you ever needed a place to track all of those wonderful movies you've been watching? We'll here it is! You can get started by hitting the "Add a Movie" button bellow. <span class="danger-span"><strong>Please Note:</strong></span> We use cookies to store your movie data locally in-browser.
+        </p>
+    </div>
+
+    <a class="btn btn-primary margin-b-5" asp-page="/Movies/Create">
+        Add a Movie
+    </a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Movie[0].Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Movie[0].RelaseDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Movie[0].Genere)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Movie[0].Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Movie)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RelaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genere)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <a asp-page="/Movies/Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-page="/Movies/Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-page="/Movies/Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
